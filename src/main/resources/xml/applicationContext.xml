@@ -60,7 +60,7 @@
     </bean>
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
-        <property name="basePackage" value="org.yuntu.mapper"/>
+        <property name="basePackage" value="com.connie7.repository"/>
         <property name="annotationClass" value="org.springframework.stereotype.Repository"/>
     </bean>
 
