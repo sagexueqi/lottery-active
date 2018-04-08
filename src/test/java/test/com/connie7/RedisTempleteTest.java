@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  * <pre>
  *     author      XueQi
  *     date        2018/4/7
- *     email       sage.xue@vipshop.com
+ *     email       job.xueqi@outlook.com
  * </pre>
  */
 @RunWith(SpringJUnit4ClassRunner.class)

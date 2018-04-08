@@ -10,7 +10,7 @@ import test.com.connie7.BaseTest;
  * <pre>
  *     author      XueQi
  *     date        2018/4/7
- *     email       sage.xue@vipshop.com
+ *     email       job.xueqi@outlook.com
  * </pre>
  */
 public class AwardServiceTest extends BaseTest {

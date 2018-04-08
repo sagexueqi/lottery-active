@@ -8,8 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import sun.misc.Timer;
 
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -18,7 +21,7 @@ import java.util.concurrent.TimeUnit;
  * <pre>
  *     author      XueQi
  *     date        2018/4/7
- *     email       sage.xue@vipshop.com
+ *     email       job.xueqi@outlook.com
  * </pre>
  */
 @Service
@@ -44,7 +47,17 @@ public class AwardServiceImpl implements AwardService {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void modifyAwardCurrentNumber(long id, long usedNumber) {
+		LotteryInfoEntity awardInfo = lotteryInfoRepository.selectByPrimaryKeyForLock(id);
+		if (awardInfo != null && (awardInfo.getInitNumber() - usedNumber >= 0)) {
+			Date oldUpdateDate = awardInfo.getUpdateTime();
+			awardInfo.setCurrentNumber(awardInfo.getInitNumber() - usedNumber);
+			awardInfo.setUpdateTime(new Date());
 
+			// 更新结果
+			int num = lotteryInfoRepository.updateByPrimaryKeyAndUpdateTime(awardInfo, oldUpdateDate);
+			LOGGER.info("modify award current number, id=[{}] usedNumber=[{}],num=[{}]", id, usedNumber, num);
+		}
 	}
 }
