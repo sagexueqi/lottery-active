@@ -3,6 +3,7 @@ package com.connie7.service.impl;
 import com.connie7.entity.LotteryInfoEntity;
 import com.connie7.repository.LotteryInfoRepository;
 import com.connie7.service.AwardService;
+import com.connie7.values.CacheKeyPrefix;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class AwardServiceImpl implements AwardService {
 			for (LotteryInfoEntity lotteryInfo : list) {
 				// 将奖品信息写入到缓存中
 				// key: lottery_award_id value:current_number
-				redisTemplate.opsForValue().set("lottery_award_" + lotteryInfo.getId(), lotteryInfo.getCurrentNumber(), 90, TimeUnit.DAYS);
+				redisTemplate.opsForValue().set(CacheKeyPrefix.LOTTERY_AWARD_PREFIX + lotteryInfo.getId(), lotteryInfo.getCurrentNumber(), 90, TimeUnit.DAYS);
 			}
 		}
 	}
